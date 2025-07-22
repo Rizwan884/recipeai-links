@@ -1,0 +1,11 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "TEAMID.ch.ohevtech.recipeai",
+                "paths": ["/recipeai-links/*", "/recipeai-links"]
+            }
+        ]
+    }
+}
