@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecipeAI - Recipe Sharing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 400px;
+        }
+        .logo { font-size: 48px; margin-bottom: 20px; }
+        h1 { color: #333; margin-bottom: 10px; }
+        p { color: #666; margin-bottom: 30px; }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+        }
+        .download-btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🍽️</div>
+        <h1>RecipeAI</h1>
+        <p>Open this recipe in the RecipeAI app</p>
+        <div id="recipe-info"></div>
+        <a href="#" id="ios-link" class="download-btn">Open in iOS App</a>
+        <a href="#" id="android-link" class="download-btn">Open in Android App</a>
+        <p style="margin-top: 20px; font-size: 12px; color: #999;">
+            Don't have the app? Download it from the App Store or Google Play
+        </p>
+    </div>
+
+    <script>
+        // Extract recipe ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const recipeId = urlParams.get('id') || window.location.pathname.split('/').pop();
+        
+        if (recipeId && recipeId !== 'index.html') {
+            document.getElementById('recipe-info').innerHTML = `<p><strong>Recipe ID:</strong> ${recipeId}</p>`;
+            
+            // Set deep link URLs
+            const iosLink = `recipeai://recipe/${recipeId}`;
+            const androidLink = `recipeai://recipe/${recipeId}`;
+            
+            document.getElementById('ios-link').href = iosLink;
+            document.getElementById('android-link').href = androidLink;
+            
+            // Auto-redirect attempt
+            setTimeout(() => {
+                if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                    window.location.href = iosLink;
+                } else if (/Android/.test(navigator.userAgent)) {
+                    window.location.href = androidLink;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
